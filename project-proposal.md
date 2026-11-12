@@ -52,9 +52,12 @@ buildable design, in two equally important parts:
   simulation (beam propagation, wave effects, sensitivity to mount errors)
   instead of rough estimates. Because the computer does the calculation, it
   can be done for every design and every iteration.
-- **Compact physical realization: 3D printing and flexures.** Instead of
-  posts and commercial mounts, the design becomes a single **3D-printed
-  monolithic baseplate**: the optics drop into slots printed at their exact
+- **Compact physical realization: 3D printing and flexures.** Because the
+  setup is now carefully designed and simulated before anything is built, the
+  freedom that large mounts and holders provide (room to move, swap and
+  re-adjust every part by hand) is no longer needed, and the optics can be
+  placed in a compact 3D-printed setup. Instead of posts and commercial
+  mounts, the design becomes a single **3D-printed monolithic baseplate**: the optics drop into slots printed at their exact
   simulated positions, and only the few degrees of freedom that truly need
   adjustment get **built-in flexure stages** (printed suspended platforms
   moved by a screw), chosen from the tolerance analysis. Everything else is
