@@ -11,21 +11,52 @@ field understand the problem.)
 
 **The problem and goal in my project:**
 
-Designing a tabletop optical setup (a beam expander, an interferometer, a
-frequency-conversion stage) is still a manual, expert-driven loop: choose a
-layout, pick real catalog parts, place them, check the beam, check how
-sensitive the result is to small misalignments, and repeat. A single mistake
-(a beam clipping a lens edge, an interferometer arm that does not close, a
-layout that drifts out of spec when a mount is nudged by a few micrometres)
-often shows up only after the parts are bought and aligned. For example,
-"expand a 1 mm 1064 nm beam to 5 mm, collimated, in under 20 cm, using stock
-Thorlabs lenses, and keep it within spec under ±50 µm / ±0.5 mrad mount errors"
-takes an experienced student hours; a bad choice takes days to discover.
+Tabletop optical setups (beam expanders, interferometers, frequency-conversion
+stages) are built in a way that wastes space, time and parts, for three
+reasons:
 
-The goal is an LLM agent that turns such a target specification into a
-validated, tolerance-robust and buildable design, and, as the research
-question, to measure **where an LLM actually adds value** in physical design
-compared to classical search and optimization.
+1. **They are far larger than they need to be.** Every lens and mirror sits in
+   a commercial post-and-mount holder bolted to an optical table, spaced so
+   that a researcher's hands and tools can reach every knob. The holders and
+   finger room, not the optics, set the size: a setup is often 5–10 times
+   larger than the same commercially available optics would allow. Large
+   setups drift more (longer lever arms, more mounts, more thermal paths),
+   occupy expensive table area, and cannot be moved or replicated. This
+   project replaces the breadboard-and-mounts build with a single
+   **3D-printed monolithic baseplate**: the optics drop into cavities printed
+   at their exact simulated positions, and only the few degrees of freedom
+   that truly need adjustment get **built-in flexure stages** (printed
+   suspended platforms moved by a screw), chosen from the tolerance analysis.
+   Everything else is fixed by the print. The result is a compact,
+   reproducible, ready-to-align part, together with an alignment plan that
+   says which screw to turn, by how much, and in what order. This
+   physical-realization side is as central to the project as the design
+   planning.
+2. **They are not fully simulated before parts are placed.** Doing a complete
+   calculation (beam propagation through every real catalog part, wave
+   effects where coherence matters, sensitivity to every mount error) would
+   take a researcher an unrealistic amount of time. Instead, designs rest on
+   back-of-envelope estimates, simplified models and untested assumptions.
+   The result is non-optimal choices of optics and positions that only show
+   up on the table, followed by redesign, re-ordering and replacement of
+   parts down the road.
+3. **Design is a slow manual loop.** Choose a layout, pick parts, place them,
+   check the beam, check the sensitivity, repeat. A single mistake (a beam
+   clipping a lens edge, an interferometer arm that does not close, a layout
+   that falls out of spec when a mount shifts by a few micrometres) often
+   shows up only after the parts are bought and aligned.
+
+For example, "expand a 1 mm 1064 nm beam to 5 mm, collimated, using stock
+Thorlabs lenses, robust to ±50 µm / ±0.5 mrad mount errors" is normally built
+on a breadboard tens of centimetres long after a rough calculation; the same
+lenses could sit in a few centimetres of printed plastic with one flexure for
+the focus.
+
+The goal is an LLM agent that turns such a target specification into a fully
+simulated, tolerance-robust design **and** a 3D-printable monolith with the
+minimal set of flexures needed to align it. As the research question, I will
+measure **where an LLM actually adds value** in physical design compared to
+classical search and optimization.
 
 I will measure improvement on a benchmark of ~15 design tasks of increasing
 difficulty (telescopes, fiber coupling, Mach–Zehnder and Michelson
@@ -35,6 +66,13 @@ interferometers, second-harmonic generation stages):
   validation errors and no unresolved simulator warnings.
 - **Robustness:** Monte Carlo yield (fraction of perturbed builds still in
   spec) at the stated mechanical tolerances.
+- **Compactness:** footprint and volume of the printed monolith compared with
+  a conventional post-and-mount build of the same parts, and the number of
+  adjustable degrees of freedom needed (fewer is better).
+- **Buildability:** every flexure passes the mechanics check (enough travel
+  and resolution, low parasitic motion); for a few tasks, the monolith is
+  printed and aligned in the lab, and the measured beam is compared with the
+  simulation.
 - **Cost:** number of simulator calls, LLM tokens and wall-clock time per
   solved task.
 - **Baselines:** random/grid search and a numeric optimizer (CMA-ES or
@@ -43,7 +81,8 @@ interferometers, second-harmonic generation stages):
 
 Limits that must be respected: only real, purchasable catalog parts; physical
 validity (no clipping, closed interferometer loops, consistent angles of
-incidence); a footprint that fits a 3D-printer bed; and honesty about the
+incidence); a monolith that fits a 3D-printer bed and leaves enough material
+around each cavity and flexure to be printable and stiff; and honesty about the
 simulator: nonlinear conversion is not yet simulated end to end, so tasks that
 depend on it are scored only on phase matching until that layer is complete.
 
@@ -75,9 +114,15 @@ simulator then runs:
 - **Validation:** geometric checks (loop closure, angle-of-incidence
   consistency, beam obstruction) with error/warning severities.
 
-Outputs are JSON metrics, a markdown report with layout figures, and
-optionally a 3D-printable STEP baseplate with built-in flexure stages and an
-alignment plan. It runs on my laptop (Python 3.11, no GPU) against a local
+- **Physical realization:** a 3D-printable STEP monolith (PLA) with optic
+  cavities placed from the same coordinates the simulation used, suspended-
+  platform flexure stages for the degrees of freedom that need adjustment, an
+  analytical model of each flexure (travel per screw turn, resolution,
+  parasitic motion, screw force) with an optional finite-element check, and a
+  step-by-step alignment plan.
+
+Outputs are JSON metrics, a markdown report with layout figures, the STEP
+files and the alignment plan. It runs on my laptop (Python 3.11, no GPU) against a local
 database of 34k Thorlabs products. Most of the simulator already exists, so
 the course project concentrates on the agent and its evaluation.
 
@@ -101,12 +146,18 @@ run tolerance analysis). It decides:
 - **Parts:** which catalog items to use (focal length, diameter, coating,
   crystal), from ~34k products.
 - **Continuous parameters:** element spacings (0–500 mm), fold angles
-  (0–90°), crystal angles, and which elements get adjustable flexure stages.
+  (0–90°) and crystal angles, pushing the layout to be as compact as the
+  optics allow rather than as roomy as hands require.
+- **Adjustability:** which elements get flexure stages and along which axes,
+  guided by the tolerance analysis (adjust the least sensitive element that
+  can still correct each error), so the printed part needs as few knobs as
+  possible.
 
 After each change it reads the simulator's metrics, validation errors and
 warnings, and the tolerance report (which mount errors dominate the variance
 budget), then decides the next edit, stopping only when every metric is in
-spec and no errors or warnings remain.
+spec, no errors or warnings remain, and the monolith and its flexures pass the
+mechanics checks.
 
 What I expect the language model to contribute: the choices a brute-force
 search handles badly. Topology and part selection are discrete and
@@ -142,13 +193,20 @@ and placing these parts is a bit like building a model from thousands of
 different Lego bricks with only a picture of the result: an expert tries a
 layout, checks it, and fixes it, often for hours, and some mistakes only
 appear once the real parts are on the table, or when a part shifts by the
-width of a hair and the whole experiment stops working.
+width of a hair and the whole experiment stops working. Because checking every
+detail on paper would take too long, people rely on rough estimates, so they
+often pick the wrong parts and have to rebuild. And because each part sits in
+a bulky holder with room for fingers to adjust it, the finished experiment is
+often five to ten times bigger than the parts themselves require.
 
 I have written a program that predicts, on a computer, what the beam will do
 for any proposed layout, and how badly small shifts of the parts would spoil
 it. In this project an AI assistant uses that program like a test bench: it
 picks real parts from a manufacturer's catalog, arranges them, runs the
 prediction, reads what went wrong, and changes the design until it meets the
-requested goal and stays robust. I will compare it with simpler computer
+requested goal and stays robust. The final design is turned into a single
+3D-printed plastic block with a snug pocket for every part, plus a few
+built-in springy hinges with a screw where fine adjustment is really needed,
+so a whole experiment fits in the palm of a hand instead of across a table. I will compare it with simpler computer
 search methods to find out which design decisions really need the assistant's
 judgement and which a plain search does just as well.
