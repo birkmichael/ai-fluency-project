@@ -38,9 +38,8 @@ stages) are built in a way that wastes space, time and parts:
    *A Michelson interferometer (beamsplitter cube, two mirrors and a stand-in
    detector), both versions drawn to the same scale. Left, the practical
    setup: Ø1″ optics, each in a standard mount, spaced to leave room for hands
-   and tools, occupying about 173 × 242 mm. Right, a compact alternative with
-   unmounted Ø½″ optics separated by small air gaps (inset: enlarged top
-   view), about 22 × 40 mm: roughly 50 times less table area.*
+   and tools, occupying about 17.3 × 24.2 cm. Right, a compact alternative with
+   unmounted Ø½″ optics (inset: enlarged top view), about 2.2 × 4.0 cm: roughly 50 times less table area.*
 2. **They are not fully simulated before parts are placed.** A complete
    calculation (beam propagation through every real catalog part, wave
    effects where coherence matters, sensitivity to every mount error) would
