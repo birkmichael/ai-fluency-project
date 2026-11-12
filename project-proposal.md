@@ -50,8 +50,10 @@ buildable design, in two equally important parts:
 - **Design planning, fully simulated.** The agent chooses the layout and real
   catalog parts and places them, and every candidate is checked by a full
   simulation (beam propagation, wave effects, sensitivity to mount errors)
-  instead of rough estimates. Because the computer does the calculation, it
-  can be done for every design and every iteration.
+  instead of rough estimates. The agent works in a closed loop (propose,
+  validate, simulate, check tolerances, revise; see Section 3), and because
+  the computer does the calculation, it can be done for every design and
+  every iteration.
 - **Compact physical realization: 3D printing and flexures.** Because the
   setup is now carefully designed and simulated before anything is built, the
   freedom that large mounts and holders provide (room to move, swap and
@@ -153,6 +155,23 @@ options and picks the best result achieve the same goal? Include one question
 you still need to answer.)
 
 **The agent in my project:**
+
+The agent works in a design loop: it proposes a layout, and each stage below
+either sends it back to revise the design with the reason for the failure, or
+passes it on, until the design is accepted.
+
+```mermaid
+graph TD
+    A["LLM proposes layout"] --> B["Graph validation"]
+    B -->|"Invalid"| A
+    B -->|"Valid"| C["Analytical ABCD sensitivity"]
+    C -->|"Any element<br/>tolerance infeasible?"| A
+    C -->|"Pass"| D["Full Gaussian/Wave simulation"]
+    D -->|"Doesn't meet<br/>target metrics?"| A
+    D -->|"Meets targets"| E["Monte Carlo tolerance"]
+    E -->|"Yield < threshold"| A
+    E -->|"Yield OK"| F["✅ Design accepted"]
+```
 
 The agent edits the JSON design graph through tools (look up a catalog part,
 add/remove/replace an element, set a distance or angle, validate, simulate,
