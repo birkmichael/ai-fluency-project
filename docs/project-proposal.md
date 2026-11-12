@@ -97,12 +97,12 @@ interferometers, second-harmonic generation stages):
   for the same task, with its answer then scored by the simulator.
 
 Limits that must be respected: only real, purchasable catalog parts; physical
-validity (no clipping, closed interferometer loops, consistent angles of
+validity (no clipping; beams that are split and later recombined, as in an
+interferometer, actually meet again at the same point; consistent angles of
 incidence); a monolith that fits a 3D-printer bed and leaves enough material
 around each slot and flexure to be printable and stiff; and honesty about the
 simulator: any physical effect needed for a full description of a task that
-the simulator does not model (for example, nonlinear frequency conversion is
-not yet simulated end to end) must be stated clearly wherever it is relevant,
+the simulator does not model must be stated clearly wherever it is relevant,
 and tasks are scored only on what is actually simulated.
 
 ## 2. The simulator
@@ -158,21 +158,23 @@ you still need to answer.)
 
 **The agent in my project:**
 
-The agent works in a design loop: it proposes a layout, and each stage below
-either sends it back to revise the design with the reason for the failure, or
-passes it on, until the design is accepted.
+The agent works in a design loop: it proposes a layout, and each check below
+either sends the design back with the reason it failed, so the agent can revise
+it, or passes it on to the next check, until the design is accepted.
 
 ```mermaid
 graph TD
-    A["LLM proposes layout"] --> B["Graph validation"]
-    B -->|"Invalid"| A
-    B -->|"Valid"| C["Analytical ABCD sensitivity"]
-    C -->|"Any element<br/>tolerance infeasible?"| A
-    C -->|"Pass"| D["Full Gaussian/Wave simulation"]
-    D -->|"Doesn't meet<br/>target metrics?"| A
-    D -->|"Meets targets"| E["Monte Carlo tolerance"]
-    E -->|"Yield < threshold"| A
-    E -->|"Yield OK"| F["✅ Design accepted"]
+    A["LLM agent proposes<br/>or revises the design"] --> B["Design graph verification"]
+    B -->|"Fail"| A
+    B -->|"Pass"| C["Simple optical simulation<br/>and sensitivity analysis"]
+    C -->|"Fail"| A
+    C -->|"Pass"| D["Full optical simulation"]
+    D -->|"Fail"| A
+    D -->|"Pass"| E["Tolerance analysis"]
+    E -->|"Fail"| A
+    E -->|"Pass"| F["3D-printing and flexure<br/>feasibility verification"]
+    F -->|"Fail"| A
+    F -->|"Pass"| G["Design accepted:<br/>printable part + alignment plan"]
 ```
 
 The agent edits the JSON design graph through tools (look up a catalog part,
