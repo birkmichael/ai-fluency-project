@@ -165,9 +165,10 @@ simulator then runs:
 
 Outputs are JSON metrics, a markdown report with layout figures, the STEP
 files and the alignment plan. It runs on my laptop (Python 3.11, no GPU)
-against a local database of 34k Thorlabs products. Most of the simulator
-already exists, so the course project concentrates on the agent, the agent
-loop and their evaluation.
+against a local database of 34k Thorlabs products. A large part of the
+simulation code is already written, but the AI agent and the loop that
+connects it to the simulator do not exist yet. Building them, evaluating them,
+and validating the simulation code, is the course project.
 
 ## 3. The agent's role
 
