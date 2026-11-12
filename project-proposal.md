@@ -100,8 +100,10 @@ Limits that must be respected: only real, purchasable catalog parts; physical
 validity (no clipping, closed interferometer loops, consistent angles of
 incidence); a monolith that fits a 3D-printer bed and leaves enough material
 around each slot and flexure to be printable and stiff; and honesty about the
-simulator: nonlinear conversion is not yet simulated end to end, so tasks that
-depend on it are scored only on phase matching until that layer is complete.
+simulator: any physical effect needed for a full description of a task that
+the simulator does not model (for example, nonlinear frequency conversion is
+not yet simulated end to end) must be stated clearly wherever it is relevant,
+and tasks are scored only on what is actually simulated.
 
 ## 2. The simulator
 
