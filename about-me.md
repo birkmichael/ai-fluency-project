@@ -1,4 +1,4 @@
 # About me
 
-Name: Michael
+Name: Michael Birk
 Faculty: Nanotechnology and Nanoscience
