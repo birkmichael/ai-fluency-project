@@ -21,3 +21,4 @@ The format, with an example (copy the shape, not the words):
 
 ## My log
 
+- W02 · Claude (Opus) · Used for: drafting project-proposal.md from my in-progress AutoOptics repo and my instructions, and rendering the two size-comparison figures from Thorlabs drawings · Checked by: reviewing and editing every section myself; corrected terminology, structure, baselines and figure details
