@@ -54,7 +54,7 @@ buildable design, in two equally important parts:
   can be done for every design and every iteration.
 - **Compact physical realization: 3D printing and flexures.** Instead of
   posts and commercial mounts, the design becomes a single **3D-printed
-  monolithic baseplate**: the optics drop into cavities printed at their exact
+  monolithic baseplate**: the optics drop into slots printed at their exact
   simulated positions, and only the few degrees of freedom that truly need
   adjustment get **built-in flexure stages** (printed suspended platforms
   moved by a screw), chosen from the tolerance analysis. Everything else is
@@ -92,7 +92,7 @@ interferometers, second-harmonic generation stages):
 Limits that must be respected: only real, purchasable catalog parts; physical
 validity (no clipping, closed interferometer loops, consistent angles of
 incidence); a monolith that fits a 3D-printer bed and leaves enough material
-around each cavity and flexure to be printable and stiff; and honesty about the
+around each slot and flexure to be printable and stiff; and honesty about the
 simulator: nonlinear conversion is not yet simulated end to end, so tasks that
 depend on it are scored only on phase matching until that layer is complete.
 
@@ -125,7 +125,7 @@ simulator then runs:
   consistency, beam obstruction) with error/warning severities.
 
 - **Physical realization:** a 3D-printable STEP monolith (PLA) with optic
-  cavities placed from the same coordinates the simulation used, suspended-
+  slots placed from the same coordinates the simulation used, suspended-
   platform flexure stages for the degrees of freedom that need adjustment, an
   analytical model of each flexure (travel per screw turn, resolution,
   parasitic motion, screw force) with an optional finite-element check, and a
