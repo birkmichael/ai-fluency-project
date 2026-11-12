@@ -24,15 +24,22 @@ stages) are built in a way that wastes space, time and parts:
    setups drift more (longer lever arms, more mounts, more thermal paths),
    occupy expensive table area, and are hard to move or replicate.
 
-   ![To-scale 3D view: a Ø1″ mirror in a KM100 mount, a Ø½″ mirror in a KM05 mount, and a bare Ø½″ mirror](figures/mount-size-comparison.png)
+   ![To-scale 3D view: a Ø1″ mirror in a mount, a Ø½″ mirror in a mount, and a bare Ø½″ mirror](figures/mount-size-comparison.png)
 
    *To scale: a bare Ø½″ mirror is a 12.7 mm disc, 6 mm thick. In a standard
-   Ø½″ kinematic mount ([Thorlabs KM05](https://www.thorlabs.com/thorproduct.cfm?partnumber=KM05))
-   it occupies a 29.5 mm square about 19 mm deep; the common Ø1″ mount
-   ([Thorlabs KM100](https://www.thorlabs.com/thorproduct.cfm?partnumber=KM100))
-   is 49.9 mm across and 38.4 mm deep. By volume, a KM100 is more than 100
-   times the Ø½″ mirror, before adding the post, post holder and finger room
-   around it. Simplified models built from the Thorlabs mechanical drawings.*
+   Ø½″ kinematic mount it occupies a 29.5 mm square about 19 mm deep; a
+   standard Ø1″ kinematic mount is 49.9 mm across and 38.4 mm deep. By
+   volume, the Ø1″ mount is more than 100 times the Ø½″ mirror, before adding
+   the post, post holder and finger room around it. Simplified models built
+   from Thorlabs mechanical drawings.*
+
+   ![To-scale 3D view of a Michelson interferometer: a practical setup with mounted Ø1″ optics next to a compact alternative with the same optics unmounted](figures/interferometer-comparison.png)
+
+   *The same Michelson interferometer (beamsplitter cube, two Ø1″ mirrors and
+   a stand-in detector), drawn to scale. Left, the practical setup: every
+   optic in a standard mount, spaced to leave room for hands and tools,
+   occupying about 173 × 242 mm. Right, a compact alternative with the same
+   optics unmounted, about 37 × 63 mm: roughly 18 times less table area.*
 2. **They are not fully simulated before parts are placed.** A complete
    calculation (beam propagation through every real catalog part, wave
    effects where coherence matters, sensitivity to every mount error) would
