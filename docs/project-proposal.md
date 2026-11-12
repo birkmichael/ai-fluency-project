@@ -126,8 +126,10 @@ simulator then runs:
 - **Tolerance engine:** sensitivity Jacobians and covariance propagation of
   mechanical errors, cross-checked by Monte Carlo, giving a variance budget
   and yield.
-- **Validation:** geometric checks (loop closure, angle-of-incidence
-  consistency, beam obstruction) with error/warning severities.
+- **Validation:** geometric checks (beams that are split and later
+  recombined, as in an interferometer, actually meet again at the same point;
+  angle-of-incidence consistency; beam obstruction) with error/warning
+  severities.
 
 - **Physical realization:** a 3D-printable STEP monolith (PLA) with optic
   slots placed from the same coordinates the simulation used, suspended-
