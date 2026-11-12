@@ -68,9 +68,7 @@ buildable design, in two equally important parts:
   catalog parts and places them, and every candidate is checked by a full
   simulation (beam propagation, wave effects, sensitivity to mount errors)
   instead of rough estimates. The agent works in a closed loop (propose,
-  validate, simulate, check tolerances, revise; see Section 3), and because
-  the computer does the calculation, it can be done for every design and
-  every iteration.
+  validate, simulate, check tolerances, revise; see Section 3).
 - **Compact physical realization: 3D printing and flexures.** Because the
   setup is now carefully designed and simulated before anything is built, the
   freedom that large mounts and holders provide (room to move, swap and
