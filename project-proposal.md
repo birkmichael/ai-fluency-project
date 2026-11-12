@@ -24,7 +24,7 @@ stages) are built in a way that wastes space, time and parts:
    setups drift more (longer lever arms, more mounts, more thermal paths),
    occupy expensive table area, and are hard to move or replicate.
 
-   ![To-scale front views: a Ø1″ mirror in a KM100 mount, a Ø½″ mirror in a KM05 mount, and a bare Ø½″ mirror](figures/mount-size-comparison.svg)
+   ![To-scale 3D view: a Ø1″ mirror in a KM100 mount, a Ø½″ mirror in a KM05 mount, and a bare Ø½″ mirror](figures/mount-size-comparison.png)
 
    *To scale: a bare Ø½″ mirror is a 12.7 mm disc, 6 mm thick. In a standard
    Ø½″ kinematic mount ([Thorlabs KM05](https://www.thorlabs.com/thorproduct.cfm?partnumber=KM05))
@@ -32,7 +32,7 @@ stages) are built in a way that wastes space, time and parts:
    ([Thorlabs KM100](https://www.thorlabs.com/thorproduct.cfm?partnumber=KM100))
    is 49.9 mm across and 38.4 mm deep. By volume, a KM100 is more than 100
    times the Ø½″ mirror, before adding the post, post holder and finger room
-   around it. Outlines simplified from the Thorlabs mechanical drawings.*
+   around it. Simplified models built from the Thorlabs mechanical drawings.*
 2. **They are not fully simulated before parts are placed.** A complete
    calculation (beam propagation through every real catalog part, wave
    effects where coherence matters, sensitivity to every mount error) would
