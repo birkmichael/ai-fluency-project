@@ -86,9 +86,10 @@ buildable design, in two equally important parts:
   lenses would sit in a few centimetres of printed plastic with one flexure
   for the focus.
 
-As the research question, I will measure **where an LLM actually adds value**
-in this kind of physical design compared to classical search and
-optimization.
+As the research question, I will measure **where an LLM in a design loop
+(proposing, getting simulation and verification feedback, and revising)
+actually adds value** in this kind of physical design, compared both to the
+same LLM designing without the loop and to classical search and optimization.
 
 I will measure improvement on a benchmark of ~15 design tasks of increasing
 difficulty (telescopes, fiber coupling, Mach–Zehnder and Michelson
@@ -107,11 +108,13 @@ interferometers, second-harmonic generation stages):
   simulation.
 - **Cost:** number of simulator calls, LLM tokens and wall-clock time per
   solved task.
-- **Baselines:** random/grid search and a numeric optimizer (CMA-ES or
-  Bayesian optimization) over a fixed topology, plus a hybrid where the agent
-  picks the topology and parts and the optimizer tunes distances. A further
-  baseline is a vanilla LLM (no simulator or tools) asked to design a setup
-  for the same task, with its answer then scored by the simulator.
+- **Baselines:** the loop is compared against (1) a vanilla LLM, with no
+  simulator, tools or feedback, asked to design a setup for the same task,
+  its answer then scored by the simulator: this isolates what the loop
+  itself adds; (2) random/grid search and a numeric optimizer (CMA-ES or
+  Bayesian optimization) over a fixed topology, with the same simulator
+  feedback but no LLM; and (3) a hybrid where the LLM in the loop picks the
+  topology and parts and the optimizer tunes distances.
 
 Limits that must be respected: only real, purchasable catalog parts; physical
 validity (no clipping; beams that are split and later recombined, as in an
@@ -216,14 +219,16 @@ budget), then decides the next edit, stopping only when every metric is in
 spec, no errors or warnings remain, and the monolith and its flexures pass the
 mechanics checks.
 
-What I expect the language model to contribute: the choices a brute-force
-search handles badly. Topology and part selection are discrete and
+What I expect the LLM in the loop to contribute: the choices a brute-force
+search handles badly, and which an LLM without feedback gets wrong. Topology and part selection are discrete and
 combinatorial, and they benefit from domain heuristics (stored in a versioned
 `skills.md` file the agent reads) and from understanding *why* a design
-failed ("the beam clips L2: use a 1-inch lens or move it closer"). Pure
+failed, which only the loop's simulation and verification feedback can tell
+it ("the beam clips L2: use a 1-inch lens or move it closer"). Pure
 numeric tuning of distances is probably done better and cheaper by an
 optimizer, so the agent will be allowed to call one. The benchmark compares
-agent-only, optimizer-only and the hybrid to test this directly.
+the LLM without the loop, the LLM in the loop, optimizer-only and the hybrid
+to test this directly.
 
 Open question: does the agent's ability to update its own heuristics file
 across tasks measurably improve success and cost on unseen tasks, or does it
@@ -264,6 +269,8 @@ prediction, reads what went wrong, and changes the design until it meets the
 requested goal and stays robust. The final design is turned into a single
 3D-printed plastic block with a snug pocket for every part, plus a few
 built-in springy hinges with a screw where fine adjustment is really needed,
-so a whole experiment fits in the palm of a hand instead of across a table. I will compare it with simpler computer
-search methods to find out which design decisions really need the assistant's
-judgement and which a plain search does just as well.
+so a whole experiment fits in the palm of a hand instead of across a table.
+I will compare it with the same assistant designing without the test bench,
+and with simpler computer search methods, to find out what the repeated
+try-check-fix cycle really adds, and which decisions a plain search does just
+as well.
