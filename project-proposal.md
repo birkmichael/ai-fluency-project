@@ -257,7 +257,7 @@ In a laser lab, experiments are built from small parts (lenses, mirrors,
 special crystals) bolted to a table so that a laser beam travels through them
 in the right order and comes out with the right size and direction. Choosing
 and placing these parts is a bit like building a model from thousands of
-different Lego bricks with only a picture of the result: an expert tries a
+different Lego bricks with only an idea of the result you want: an expert tries a
 layout, checks it, and fixes it, often for hours, and some mistakes only
 appear once the real parts are on the table, or when a part shifts by the
 width of a hair and the whole experiment stops working. Because checking every
