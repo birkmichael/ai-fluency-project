@@ -33,13 +33,14 @@ stages) are built in a way that wastes space, time and parts:
    the post, post holder and finger room around it. Simplified models built
    from Thorlabs mechanical drawings.*
 
-   ![To-scale 3D view of a Michelson interferometer: a practical setup with mounted Ø1″ optics next to a compact alternative with the same optics unmounted](figures/interferometer-comparison.png)
+   ![To-scale 3D view of a Michelson interferometer: a practical setup with mounted Ø1″ optics next to a compact alternative with unmounted Ø½″ optics](figures/interferometer-comparison.png)
 
-   *The same Michelson interferometer (beamsplitter cube, two Ø1″ mirrors and
-   a stand-in detector), drawn to scale. Left, the practical setup: every
-   optic in a standard mount, spaced to leave room for hands and tools,
-   occupying about 173 × 242 mm. Right, a compact alternative with the same
-   optics unmounted, about 37 × 63 mm: roughly 18 times less table area.*
+   *A Michelson interferometer (beamsplitter cube, two mirrors and a stand-in
+   detector), both versions drawn to the same scale. Left, the practical
+   setup: Ø1″ optics, each in a standard mount, spaced to leave room for hands
+   and tools, occupying about 173 × 242 mm. Right, a compact alternative with
+   unmounted Ø½″ optics separated by small air gaps (inset: enlarged top
+   view), about 22 × 40 mm: roughly 50 times less table area.*
 2. **They are not fully simulated before parts are placed.** A complete
    calculation (beam propagation through every real catalog part, wave
    effects where coherence matters, sensitivity to every mount error) would
