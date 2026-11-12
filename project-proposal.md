@@ -90,7 +90,9 @@ interferometers, second-harmonic generation stages):
   solved task.
 - **Baselines:** random/grid search and a numeric optimizer (CMA-ES or
   Bayesian optimization) over a fixed topology, plus a hybrid where the agent
-  picks the topology and parts and the optimizer tunes distances.
+  picks the topology and parts and the optimizer tunes distances. A further
+  baseline is a vanilla LLM (no simulator or tools) asked to design a setup
+  for the same task, with its answer then scored by the simulator.
 
 Limits that must be respected: only real, purchasable catalog parts; physical
 validity (no clipping, closed interferometer loops, consistent angles of
