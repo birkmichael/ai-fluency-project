@@ -11,9 +11,10 @@ field understand the problem.)
 
 **The problem and goal in my project:**
 
+### The problems
+
 Tabletop optical setups (beam expanders, interferometers, frequency-conversion
-stages) are built in a way that wastes space, time and parts, for three
-reasons:
+stages) are built in a way that wastes space, time and parts:
 
 1. **They are far larger than they need to be.** Every lens and mirror sits in
    a commercial post-and-mount holder bolted to an optical table, spaced so
@@ -21,23 +22,13 @@ reasons:
    finger room, not the optics, set the size: a setup is often 5–10 times
    larger than the same commercially available optics would allow. Large
    setups drift more (longer lever arms, more mounts, more thermal paths),
-   occupy expensive table area, and cannot be moved or replicated. This
-   project replaces the breadboard-and-mounts build with a single
-   **3D-printed monolithic baseplate**: the optics drop into cavities printed
-   at their exact simulated positions, and only the few degrees of freedom
-   that truly need adjustment get **built-in flexure stages** (printed
-   suspended platforms moved by a screw), chosen from the tolerance analysis.
-   Everything else is fixed by the print. The result is a compact,
-   reproducible, ready-to-align part, together with an alignment plan that
-   says which screw to turn, by how much, and in what order. This
-   physical-realization side is as central to the project as the design
-   planning.
-2. **They are not fully simulated before parts are placed.** Doing a complete
+   occupy expensive table area, and are hard to move or replicate.
+2. **They are not fully simulated before parts are placed.** A complete
    calculation (beam propagation through every real catalog part, wave
    effects where coherence matters, sensitivity to every mount error) would
    take a researcher an unrealistic amount of time. Instead, designs rest on
    back-of-envelope estimates, simplified models and untested assumptions.
-   The result is non-optimal choices of optics and positions that only show
+   This leads to non-optimal choices of optics and positions that only show
    up on the table, followed by redesign, re-ordering and replacement of
    parts down the road.
 3. **Design is a slow manual loop.** Choose a layout, pick parts, place them,
@@ -48,15 +39,34 @@ reasons:
 
 For example, "expand a 1 mm 1064 nm beam to 5 mm, collimated, using stock
 Thorlabs lenses, robust to ±50 µm / ±0.5 mrad mount errors" is normally built
-on a breadboard tens of centimetres long after a rough calculation; the same
-lenses could sit in a few centimetres of printed plastic with one flexure for
-the focus.
+on a breadboard tens of centimetres long after a rough calculation, although
+the lenses themselves would fit in a few centimetres.
 
-The goal is an LLM agent that turns such a target specification into a fully
-simulated, tolerance-robust design **and** a 3D-printable monolith with the
-minimal set of flexures needed to align it. As the research question, I will
-measure **where an LLM actually adds value** in physical design compared to
-classical search and optimization.
+### The proposed solution and goal
+
+An LLM agent that turns such a target specification into a finished,
+buildable design, in two equally important parts:
+
+- **Design planning, fully simulated.** The agent chooses the layout and real
+  catalog parts and places them, and every candidate is checked by a full
+  simulation (beam propagation, wave effects, sensitivity to mount errors)
+  instead of rough estimates. Because the computer does the calculation, it
+  can be done for every design and every iteration.
+- **Compact physical realization: 3D printing and flexures.** Instead of
+  posts and commercial mounts, the design becomes a single **3D-printed
+  monolithic baseplate**: the optics drop into cavities printed at their exact
+  simulated positions, and only the few degrees of freedom that truly need
+  adjustment get **built-in flexure stages** (printed suspended platforms
+  moved by a screw), chosen from the tolerance analysis. Everything else is
+  fixed by the print. The result is a part as small as the optics allow,
+  reproducible, and delivered with an alignment plan that says which screw
+  to turn, by how much, and in what order. In the example above, the same
+  lenses would sit in a few centimetres of printed plastic with one flexure
+  for the focus.
+
+As the research question, I will measure **where an LLM actually adds value**
+in this kind of physical design compared to classical search and
+optimization.
 
 I will measure improvement on a benchmark of ~15 design tasks of increasing
 difficulty (telescopes, fiber coupling, Mach–Zehnder and Michelson
